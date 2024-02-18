@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expense Tracker</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: aquamarine;
+    }
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #121212;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        text-align: center;
+    }
+    form {
+        margin-bottom: 20px;
+    }
+    form input[type="text"], form input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    form button {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    form button:hover {
+        background-color: #0056b3;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    ul li {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+    .total {
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Expense Tracker</h2>
+    <form id="expenseForm">
+        <input type="text" id="description" placeholder="Description" required>
+        <input type="number" id="amount" placeholder="Amount" min="0" step="0.01" required>
+        <button type="submit">Add Expense</button>
+    </form>
+    <h3>Expenses</h3>
+    <ul id="expenseList"></ul>
+    <p class="total">Total Expense: $<span id="totalExpense">0.00</span></p>
+</div>
+
+<script>
+    const expenseForm = document.getElementById('expenseForm');
+    const expenseList = document.getElementById('expenseList');
+    const totalExpense = document.getElementById('totalExpense');
+    let total = 0;
+
+    expenseForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const description = document.getElementById('description').value;
+        const amount = parseFloat(document.getElementById('amount').value);
+
+        if (description && amount) {
+            total += amount;
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `${description}: $${amount.toFixed(2)}`;
+            expenseList.appendChild(listItem);
+            totalExpense.textContent = total.toFixed(2);
+            document.getElementById('description').value = '';
+            document.getElementById('amount').value = '';
+        } else {
+            alert('Please enter both description and amount.');
+        }
+    });
+</script>
+</body>
+</html>
